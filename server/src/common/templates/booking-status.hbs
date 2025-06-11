@@ -1,0 +1,284 @@
+<html>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Booking Receipt</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    /* Modified order card styling */
+    .order-card {
+      background-color: #f8f9fa;
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      margin-bottom: 15px;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .order-card h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 18px;
+      color: #000000;
+    }
+
+    .order-item {
+      margin: 8px 0;
+      font-size: 14px;
+      color: #34495e;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .order-item strong {
+      margin-right: 10px;
+    }
+
+    /* Details section styling */
+    .details {
+      margin: 20px 0;
+      padding: 20px;
+      background-color: #ecf0f1;
+      border-radius: 8px;
+    }
+
+    .details p {
+      margin: 10px 0;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .status {
+      font-weight: bold;
+      color: #27ae60;
+    }
+
+    .button {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      background-color: #3498db;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .button:hover {
+      background-color: #2980b9;
+    }
+
+    .calendar-button {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      background-color: #27ae60;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+
+    .calendar-button:hover {
+      background-color: #219653;
+    }
+
+    .footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+      width: 100%;
+    }
+
+    #footer-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .footer-logo {
+      max-width: 100px;
+      max-height: 50px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-links img {
+      display: block;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+
+<body>
+  <div class='container'>
+    <h1>Booking Receipt</h1>
+    {{#if customer_name}}
+    <p>Hello {{customer_name}},</p>
+    {{else}}
+    <p>Dear Customer </p>
+    {{/if}}
+    <p>Your booking has been successfully
+      {{status}}. Below are the details:</p>
+
+
+    <div class="details">
+      <div class='order-card'>
+        <h2>Booking Info</h2>
+        <div class='order-item'>
+          <strong>Booking ID:</strong>
+          <span>#{{bookingId}}</span>
+        </div>
+        <div class='order-item'>
+          <strong>Created:</strong>
+          <span>{{formatDateToDateAndTime createdAt}}</span>
+        </div>
+      </div>
+
+      <div class='order-card'>
+        <h2>Booking Details</h2>
+        {{#if location_name}}
+        <div class='order-item'>
+          <strong>Location:</strong>
+          <span>{{location_name}}</span>
+        </div>
+        {{/if}}
+
+        {{#if service_name}}
+        <div class='order-item'>
+          <strong>Service:</strong>
+          <span>{{service_name}}</span>
+        </div>
+        {{/if}}
+
+        {{#if price}}
+        <div class='order-item'>
+          <strong>Price:</strong>
+          <span>{{price}} {{currency}}</span>
+        </div>
+        {{/if}}
+
+        {{#if date}}
+        <div class='order-item'>
+          <strong>Date:</strong>
+          <span>{{formatDateLongerDay date}}</span>
+        </div>
+        {{/if}}
+
+        {{#if time_from}}
+        <div class='order-item'>
+          <strong>Time:</strong>
+          <span>{{formatTimeWithoutSeconds time_from}} - {{formatTimeWithoutSeconds time_to}}</span>
+        </div>
+        {{/if}}
+
+        {{#if status}}
+        <div class='order-item'>
+          <strong>Status:</strong>
+          <span class="status">{{status}}</span>
+        </div>
+        {{/if}}
+
+        {{#if PaymentStatus}}
+        <div class='order-item'>
+          <strong>Payment Status:</strong>
+          <span class="status">{{PaymentStatus}}</span>
+        </div>
+        {{/if}}
+
+        {{#if paymentMethod}}
+        <div class='order-item'>
+          <strong>Payment Method:</strong>
+          <span class="status">{{paymentMethod}}</span>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+
+    <a href='{{receipt_link}}' class='button'>View Receipt</a>
+    <div class="calendar-links">
+      <a href="https://www.google.com/calendar/render?action=TEMPLATE&text={{service_name}}-{{businessName}}&details=Your booking at {{location_name}} (Booking ID: {{bookingId}})&location={{location_name}}&dates={{googleCalendarDateFormat date time_from}}/{{googleCalendarDateFormat date time_to}}"
+        target="_blank" class="calendar-button">Add to Calendar</a>
+    </div>
+    <div class='footer' style='margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0; width: 100%;'>
+      <table width='100%' cellpadding='0' cellspacing='0' style='margin-bottom: 20px;'>
+        <tr>
+          {{#if businessLogo}}
+          {{#if (eq businessSocialLinks.length 0)}}
+          <td align='center' style='width: 100%;'>
+          {{else}}
+          <td align='left' style='width: 50%;'>
+          {{/if}}
+            <img src='{{businessLogo}}' alt='Business Logo' style='max-width: 100px; height: auto; display: block;' />
+          </td>
+          {{/if}}
+          {{#if businessLogo}}
+          <td align='right' style='width: 50%;'>
+            {{else}}
+          <td align='center' style='width: 100%;'>
+            {{/if}}
+            {{#each businessSocialLinks}}
+            <a href='{{this.link}}' title='{{this.type}}' style='margin-left: 10px;'>
+              {{#if (eq this.type 'Facebook')}}
+              <img src='cid:facebook-icon' alt='Facebook' width='24' height='24' />
+              {{else if (eq this.type 'Instagram')}}
+              <img src='cid:instagram-icon' alt='Instagram' width='24' height='24' />
+              {{else if (eq this.type 'LinkedIn')}}
+              <img src='cid:linkedin-icon' alt='LinkedIn' width='24' height='24' />
+              {{else if (eq this.type 'X')}}
+              <img src='cid:x-icon' alt='X' width='24' height='24' />
+              {{else if (eq this.type 'Tiktok')}}
+              <img src='cid:tiktok-icon' alt='Tiktok' width='24' height='24' />
+              {{else if (eq this.type 'Whatsapp')}}
+              <img src='cid:whatsapp-icon' alt='Whatsapp' width='24' height='24' />
+              {{else}}
+              <img src='cid:link-icon' alt='Link' width='24' height='24' />
+              {{/if}}
+            </a>
+            {{/each}}
+          </td>
+        </tr>
+      </table>
+
+      <p class='copyright' style='text-align: center; margin-top: 15px; font-size: 14px; color: #7f8c8d;'>
+        Thank you for choosing our service.
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>

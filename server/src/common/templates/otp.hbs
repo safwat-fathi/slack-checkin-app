@@ -1,0 +1,56 @@
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f2f2f2;
+				margin: 0;
+				padding: 0;
+			}
+			.container {
+				max-width: 600px;
+				margin: 0 auto;
+				padding: 20px;
+				background-color: #fff;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+			h1 {
+				color: #333;
+				font-size: 24px;
+				margin-bottom: 20px;
+			}
+			p {
+				color: #666;
+				font-size: 16px;
+				margin-bottom: 20px;
+			}
+			.button {
+				display: inline-block;
+				padding: 10px 20px;
+				background-color: #4CAF50;
+				color: #fff;
+				text-decoration: none;
+				border-radius: 5px;
+				font-size: 16px;
+				cursor: pointer;
+			}
+			.button:hover {
+				background-color: #45a049;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>OTP Verification</h1>
+			<p>Hello {{email}},</p>
+			<p>Use the following OTP to verify your email address:</p>
+			<p><strong>OTP: {{otp}}</strong></p>
+			<p>This OTP will expire in 1 hour.</p>
+			<p>Thank you for using BookLnk.</p>
+		</div>
+	</body>
+</html>
+			
