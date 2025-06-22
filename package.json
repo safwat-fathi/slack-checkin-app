@@ -17,9 +17,6 @@
 		"lint:client": "cd client && pnpm lint",
 		"lint": "pnpm lint:server && pnpm lint:client"
 	},
-	"devDependencies": {
-		"concurrently": "^8.2.0"
-	},
 	"keywords": [
 		"slack",
 		"check-in",

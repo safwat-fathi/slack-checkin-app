@@ -49,7 +49,8 @@ export class CheckService {
     }
 
     activeEntry.checkOutTime = new Date();
-    activeEntry.status = 'checked-out';
+    activeEntry.status = CheckInStatus.CHECKED_OUT;
+		
     if (checkOutDto.notes) {
       activeEntry.notes = activeEntry.notes
         ? `${activeEntry.notes}\n\nCheck-out notes: ${checkOutDto.notes}`

@@ -1,12 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import CONSTANTS from './common/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Main');
 
   // Remove COOP header to fix Swagger UI issues
   app.use((_, res, next) => {
@@ -69,6 +70,9 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
   });
 
-  await app.listen(process.env.PORT ?? 3000);
+  const port = process.env.HTTP_SERVER_PORT || 8000;
+
+  await app.listen(port);
+  logger.log(`Application is running on port ${port}`);
 }
 bootstrap();

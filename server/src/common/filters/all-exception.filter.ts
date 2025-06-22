@@ -58,12 +58,19 @@ export class AllExceptionFilter implements ExceptionFilter {
     }
 
     // Class-validator
-    if (Array.isArray(exception) && exception[0] instanceof ValidationError) {
+    if (
+      exception &&
+      Array.isArray(exception) &&
+      exception[0] instanceof ValidationError
+    ) {
+      const validationError = exception[0];
+      // default constraints to {} if it’s undefined
+      const constraints = validationError.constraints ?? {};
+      const messages = Object.values(constraints).join(', ');
+
       return response.status(HttpStatus.BAD_REQUEST).json({
         success: false,
-        message: `Validation error for ${
-          exception[0].property
-        } - ${Object.values(exception[0].constraints)?.join(', ')}`,
+        message: `Validation error for ${validationError.property} – ${messages}`,
         timestamp: new Date().toISOString(),
         path: request.url,
       });

@@ -6,8 +6,12 @@ const ENV = process.env.NODE_ENV;
 config({ path: `.env.${ENV}` });
 
 const dbConfig: DataSourceOptions = {
-  type: 'sqlite',
-  database: 'check-in.sqlite',
+  type: 'postgres',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USER,
+  database: 'postgres',
+  password: '',
   synchronize: false,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   migrations: ['src/migrations/*.ts'],

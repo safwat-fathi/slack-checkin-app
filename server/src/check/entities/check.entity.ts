@@ -33,6 +33,7 @@ export class CheckIn {
 
   @Column({
     type: 'enum',
+    enum: CheckInStatus,
     default: CheckInStatus.CHECKED_IN,
   })
   status: CheckInStatus;
